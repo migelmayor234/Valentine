@@ -16,31 +16,26 @@
       align-items: center;
       overflow: hidden;
     }
-
     .container {
       text-align: center;
       max-width: 420px;
       z-index: 2;
     }
-
     h1 {
       color: #d6336c;
       margin-bottom: 20px;
     }
-
     img {
       width: 250px;
       border-radius: 16px;
       margin-bottom: 20px;
     }
-
     .buttons {
       display: flex;
       justify-content: center;
       gap: 16px;
       margin-top: 20px;
     }
-
     button {
       padding: 14px 26px;
       border-radius: 999px;
@@ -49,19 +44,15 @@
       font-size: 18px;
       transition: all 0.3s ease;
     }
-
     #yesBtn {
       background-color: #ff4d6d;
       color: white;
       z-index: 3;
     }
-
     #noBtn {
       background-color: #e9ecef;
       color: #e03131;
     }
-
-    /* BIG OVERLAY MESSAGE */
     #noOverlay {
       position: fixed;
       top: 50%;
@@ -76,51 +67,39 @@
       pointer-events: none;
       max-width: 90vw;
     }
-
     .show {
       animation: popShakeFade 1.6s ease forwards;
     }
-
     @keyframes popShakeFade {
       0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
       25% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
       40% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-48%, -50%); }
-      60% { transform: translate(-52%, -50%); }
-      70% { transform: translate(-50%, -50%); }
       100% { opacity: 0; }
     }
-
     @keyframes shake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-5px); }
       50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
       100% { transform: translateX(0); }
     }
-
     .shake {
       animation: shake 0.3s;
-    }
-
-    .hidden {
-      display: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- BIG MESSAGE -->
+  <!-- Message Overlay -->
   <div id="noOverlay"></div>
 
-  <!-- Soft pop sound -->
+  <!-- Pop sound -->
   <audio id="popSound" preload="auto">
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-click-pop-1114.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- BACKGROUND MUSIC -->
+  <!-- Background Music -->
   <audio id="bgMusic" loop>
-    <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-piano-131.mp3" type="audio/mpeg">
+    <source src="YOUR_PIANO_TRACK_URL_HERE.mp3" type="audio/mpeg">
   </audio>
 
   <div class="container">
@@ -162,7 +141,6 @@
       "Destiny is calling"
     ];
 
-    // Start music on first click anywhere
     function startMusic() {
       if (!musicStarted) {
         bgMusic.play().catch(e => console.log("Music blocked:", e));
@@ -173,32 +151,19 @@
 
     noBtn.addEventListener("click", () => {
       noCount++;
-
-      // Play pop sound
       popSound.currentTime = 0;
       popSound.play();
-
-      // YES grows
       yesScale += 0.3;
       yesBtn.style.transform = `scale(${yesScale})`;
-
-      // NO shrinks
-      noScale -= 0.15;
-      if (noScale < 0.4) noScale = 0.4;
+      noScale = Math.max(noScale - 0.15, 0.4);
       noBtn.style.transform = `scale(${noScale})`;
-
-      // Shake NO
       noBtn.classList.remove("shake");
       void noBtn.offsetWidth;
       noBtn.classList.add("shake");
-
-      // Show overlay text
       noOverlay.textContent = noMessages[noCount % noMessages.length];
       noOverlay.classList.remove("show");
       void noOverlay.offsetWidth;
       noOverlay.classList.add("show");
-
-      // YES takes over screen
       if (yesScale >= 4) {
         noBtn.classList.add("hidden");
         yesBtn.style.position = "fixed";
@@ -215,10 +180,6 @@
       question.textContent = "YAY!!! 💖🥰";
       gif.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
       document.querySelector(".buttons").classList.add("hidden");
-      launchInfiniteCelebration();
-    });
-
-    function launchInfiniteCelebration() {
       setInterval(() => {
         const el = document.createElement("div");
         el.textContent = Math.random() > 0.5 ? "🎉" : "💖";
@@ -230,7 +191,7 @@
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 5000);
       }, 100);
-    }
+    });
 
     const style = document.createElement("style");
     style.innerHTML = `
