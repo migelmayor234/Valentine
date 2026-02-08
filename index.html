@@ -80,6 +80,7 @@
       0% { transform: translateX(0); }
       25% { transform: translateX(-5px); }
       50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
       100% { transform: translateX(0); }
     }
     .shake {
@@ -99,7 +100,7 @@
 
   <!-- Background Music -->
   <audio id="bgMusic" loop>
-    <source src="YOUR_PIANO_TRACK_URL_HERE.mp3" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/migelmayor234/Valentine/main/romantic_piano.mp3" type="audio/mpeg">
   </audio>
 
   <div class="container">
@@ -141,6 +142,7 @@
       "Destiny is calling"
     ];
 
+    // Start music on first click
     function startMusic() {
       if (!musicStarted) {
         bgMusic.play().catch(e => console.log("Music blocked:", e));
@@ -180,6 +182,7 @@
       question.textContent = "YAY!!! 💖🥰";
       gif.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
       document.querySelector(".buttons").classList.add("hidden");
+      // Infinite confetti/hearts
       setInterval(() => {
         const el = document.createElement("div");
         el.textContent = Math.random() > 0.5 ? "🎉" : "💖";
